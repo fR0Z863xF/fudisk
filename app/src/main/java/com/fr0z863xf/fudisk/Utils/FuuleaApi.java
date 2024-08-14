@@ -1,14 +1,14 @@
 package com.fr0z863xf.fudisk.Utils;
 
-import android.accounts.Account;
 import android.util.Log;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -136,7 +136,7 @@ public class FuuleaApi {
                 Log.w("FuuleaApi", "refreshCOS: " + res);
                 throw new IOException("Unexpected code " + response);
             }
-            CredentialsReponse cr = new Gson().fromJson(res, CredentialsReponse.class);
+            CredentialsResponse cr = new Gson().fromJson(res, CredentialsResponse.class);
             AccountManager accountManager = AccountManager.getInstance(null);
             if("".equals(cr.credentials.getSessionToken()) || "".equals(cr.credentials.getTmpSecretId()) || "".equals(cr.credentials.getTmpSecretKey())) {
                 Log.e("FuuleaApi", "刷新cos凭据失败：凭据为空");
@@ -212,6 +212,8 @@ public class FuuleaApi {
         return a;
     }
 }
+
+@Keep
 class LoginResponse {
     public String token="";
 
@@ -225,7 +227,8 @@ class LoginResponse {
 
 }
 
-class CredentialsReponse {
+@Keep
+class CredentialsResponse {
     public  Credentials credentials;
 
     public Credentials getCredentials() {
@@ -236,6 +239,7 @@ class CredentialsReponse {
     }
 }
 
+@Keep
 class Credentials {
     public String sessionToken;
     public String tmpSecretId;

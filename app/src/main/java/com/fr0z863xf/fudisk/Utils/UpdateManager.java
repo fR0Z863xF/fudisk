@@ -10,6 +10,7 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.compose.material3.AlertDialogDefaults;
@@ -19,6 +20,7 @@ import androidx.window.core.BuildConfig;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -80,7 +82,7 @@ public class UpdateManager {
     }
 }
 
-
+@Keep
 class UpdateResponse {
     public String tag_name;
     public String html_url;
