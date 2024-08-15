@@ -1,26 +1,17 @@
 package com.fr0z863xf.fudisk.Utils;
 
 import android.app.Application;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+
 import android.util.Log;
-import android.widget.Toast;
+
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.compose.material3.AlertDialogDefaults;
-import androidx.compose.material3.AlertDialogKt;
-import androidx.window.core.BuildConfig;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +23,10 @@ public class UpdateManager {
 
     public static UpdateManager instance;
     private Application application;
+    public MutableLiveData<Boolean> needUpdate = new MutableLiveData<Boolean>(false);
+    public String newVersion;
+    public String releaseNotes;
+    public String downloadLink;
 
     private UpdateManager(Application application) {
         this.application = application;
@@ -59,21 +54,14 @@ public class UpdateManager {
                 throw new IOException("Unexpected code " + response);
             }
             UpdateResponse updateResponse = new Gson().fromJson(res, UpdateResponse.class);
-            Log.i("UpdateManager", "Latest version: " + updateResponse.tag_name);
+
             String newVersion = Objects.requireNonNullElse(updateResponse.tag_name, this.application.getPackageManager().getPackageInfo(this.application.getPackageName(),0).versionName);
+            Log.i("UpdateManager", "Latest version: " + newVersion + "Current version: " + this.application.getPackageManager().getPackageInfo(this.application.getPackageName(),0).versionName);
             if (!newVersion.equals(this.application.getPackageManager().getPackageInfo(this.application.getPackageName(),0).versionName)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this.application);
-                builder.setTitle("软件更新");
-                builder.setMessage("发现新版本，更新日志：\n" + updateResponse.body );
-                builder.setCancelable(false);
-                builder.setPositiveButton("立即更新", (dialog, which) -> {
-                    //复制链接
-                    ClipboardManager clipboard = (ClipboardManager) this.application.getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("label", Objects.requireNonNullElse(updateResponse.html_url, "https://github.com/fR0Z863xF/fudisk/releases/latest"));
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(application, "更新链接已复制到剪贴板", Toast.LENGTH_SHORT).show();
-                    this.application.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Objects.requireNonNullElse(updateResponse.html_url, "https://github.com/fR0Z863xF/fudisk/releases/latest"))));
-                });
+                this.needUpdate.postValue(true);
+                this.newVersion = newVersion;
+                this.releaseNotes = updateResponse.body;
+                this.downloadLink = updateResponse.html_url;
             }
         } catch (Exception e) {
             e.printStackTrace();
