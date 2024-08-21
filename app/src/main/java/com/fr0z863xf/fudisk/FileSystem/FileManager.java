@@ -85,14 +85,14 @@ public class FileManager {
                 this.dataDir = indexDir;
             }
         }
-        File testFile = new File(dataDir,"基准测试.fudisk");
-        if(!testFile.exists()) {
-            try {
-                testFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        File testFile = new File(dataDir,"基准测试.fudisk");
+//        if(!testFile.exists()) {
+//            try {
+//                testFile.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         Log.i("FileManager",this.dataDir.toString());
         this.cosXmlService = new CosXmlService(application.getApplicationContext(),new CosXmlServiceConfig.Builder()
                 .setRegion("ap-shanghai")

@@ -201,7 +201,7 @@ public class FuuleaApi {
         if (gtype == 1) {
             a = "HangZhi";
         } else if (gtype == 2) {
-            a = "Huawei";
+            a = "HEM";
         }
         return a;
     }

@@ -116,7 +116,7 @@ fun AccountConfigDialog(onDismiss: () -> Unit) {
     var password by remember { mutableStateOf("") }
     var serialNumber by remember { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(0) }
-    val options = listOf("领创", "航志（不完全支持）", "华为（完全不支持，但你可以试试）")
+    val options = listOf("领创", "航志", "华为HEM")
 
 
     val accountManager = AccountManager.getInstance(null)
