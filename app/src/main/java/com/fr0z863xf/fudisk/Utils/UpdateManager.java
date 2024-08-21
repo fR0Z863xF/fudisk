@@ -49,7 +49,6 @@ public class UpdateManager {
     }
 
     public void checkForUpdates() {
-        // TODO: Implement update checking
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -79,36 +78,38 @@ public class UpdateManager {
 
     }
 
-//    public String downloadPackage(String url,String version) {
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .connectTimeout(10, TimeUnit.SECONDS)
-//                .readTimeout(10, TimeUnit.SECONDS)
-//                .writeTimeout(10, TimeUnit.SECONDS)
-//                .build();
-//
-//        Request request = new Request.Builder().url(url).get().build();
-//
-//        try (Response response = client.newCall(request).execute()) {
-//            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-//            InputStream is = null;
-//            byte[] buf = new byte[2048];
-//            int len;
-//            FileOutputStream fos = null;
-//            is = response.body().byteStream();
-//            File file = new File(this.saveDir, "fudisk-release-" + version + ".apk");
-//            fos = new FileOutputStream(file);
-//            while ((len = is.read(buf)) != -1) {
-//                fos.write(buf, 0, len);
-//            }
-//            fos.flush();
-//            is.close();
-//            fos.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
+    public String downloadPackage(String url,String version) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .build();
+
+        Request request = new Request.Builder().url(url).get().build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            InputStream is = null;
+            byte[] buf = new byte[2048];
+            int len;
+            FileOutputStream fos = null;
+            is = response.body().byteStream();
+            File file = new File(this.saveDir, "fudisk-release-" + version + ".apk");
+            fos = new FileOutputStream(file);
+            while ((len = is.read(buf)) != -1) {
+                fos.write(buf, 0, len);
+            }
+            fos.flush();
+            is.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+
+    }
 }
 
 @Keep

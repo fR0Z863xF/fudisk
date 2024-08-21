@@ -50,10 +50,12 @@ public class RefreshWorker extends Worker {
         String result = accountManager.refreshAccount();
         //accountManager.accountStatus.postValue(2);
         Log.i("RefreshWorker", "刷新结束");
-        if ("ok".equals(result)) {
-            accountManager.accountStatus.postValue(2);
-            Log.i("RefreshWorker", "刷新成功");
-        }
+//        if ("ok".equals(result)) {
+//            accountManager.accountStatus.postValue(2);
+//            Log.i("RefreshWorker", "刷新成功");
+//        } else {
+//            accountManager.accountStatus.postValue(3);
+//        }
         return Result.success(new Data.Builder()
                 .putInt("account_status", accountManager.accountStatus.getValue())
                 .build());

@@ -80,7 +80,7 @@ fun DashboardView(fragment : Fragment) {
             onClick = {
                 val accountManager = AccountManager.getInstance(null)
                 if (accountManager.accountStatus.value != 2) {
-                    Toast.makeText(fragment.context,"帐号配置不正确", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(fragment.context,"帐号异常", Toast.LENGTH_SHORT).show()
 
                 } else {
                     Toast.makeText(fragment.context,"正在唤起文文件选择器", Toast.LENGTH_SHORT).show()

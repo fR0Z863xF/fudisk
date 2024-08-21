@@ -184,6 +184,8 @@ public class AccountManager {
             FuuleaApi.refresh(this.cookies, this.jwt, this.account, this.sn, this.gtype, this.uuid);
         } catch (Exception e) {
             e.printStackTrace();
+            this.accountStatus.postValue(3);
+            return "oh no";
         }
 
         Log.i("AccountManager", "刷新帐号配置:完成");
