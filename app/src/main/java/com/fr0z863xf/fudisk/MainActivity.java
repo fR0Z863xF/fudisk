@@ -55,19 +55,19 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 if (!aBoolean) return;
                 UpdateManager uM =  UpdateManager.getInstance(null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("软件更新");
-                builder.setMessage("发现新版本，更新日志：\n" + uM.releaseNotes );
-                builder.setCancelable(false);
-                builder.setPositiveButton("立即更新", (dialog, which) -> {
-                    //复制链接
-                    ClipboardManager clipboard = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("label", Objects.requireNonNullElse(uM.downloadLink, "https://github.com/fR0Z863xF/fudisk/releases/latest"));
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(MainActivity.this, "更新链接已复制到剪贴板", Toast.LENGTH_SHORT).show();
-                    MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Objects.requireNonNullElse(uM.downloadLink, "https://github.com/fR0Z863xF/fudisk/releases/latest"))));
-                    MainActivity.this.finish();
-                });
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("软件更新")
+                        .setMessage("发现新版本，更新日志：\n" + uM.releaseNotes )
+                        .setCancelable(false)
+                        .setPositiveButton("立即更新", (dialog, which) -> {
+                        //复制链接
+                        ClipboardManager clipboard = (ClipboardManager) MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("label", Objects.requireNonNullElse(uM.downloadLink, "https://github.com/fR0Z863xF/fudisk/releases/latest"));
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(MainActivity.this, "更新链接已复制到剪贴板", Toast.LENGTH_SHORT).show();
+                        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Objects.requireNonNullElse(uM.downloadLink, "https://github.com/fR0Z863xF/fudisk/releases/latest"))));
+                        MainActivity.this.finish();
+                    });
                 builder.create().show();
 
             }
